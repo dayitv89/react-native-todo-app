@@ -1,0 +1,33 @@
+APP_TARGET = 'Todoapp'
+PROJECT_PATH = '../node_modules/'
+
+platform :ios, '10.0'
+
+target APP_TARGET do
+    pod 'React', :path => PROJECT_PATH + 'react-native', :subspecs => [
+    'Core',
+    'CxxBridge',
+    'RCTText',
+    'RCTNetwork',
+    'RCTLinkingIOS',
+    'RCTImage',
+    'RCTAnimation',
+    'RCTWebSocket', # needed for debugging
+    'RCTActionSheet',
+    'RCTGeolocation',
+    'RCTSettings',
+    'RCTVibration',
+    'DevSupport',
+    'RCTPushNotification'
+    ]
+    # Explicitly include Yoga if you are using RN >= 0.42.0
+    pod 'yoga', :path => PROJECT_PATH + 'react-native/ReactCommon/yoga'
+
+    # Third party deps podspec link
+    pod 'DoubleConversion', :podspec => PROJECT_PATH + 'react-native/third-party-podspecs/DoubleConversion.podspec'
+    pod 'glog', :podspec => PROJECT_PATH + 'react-native/third-party-podspecs/GLog.podspec'
+    pod 'Folly', :podspec => PROJECT_PATH + 'react-native/third-party-podspecs/Folly.podspec'
+
+    # pod 'react-native-maps', :path => PROJECT_PATH + 'react-native-maps'
+    pod 'RNVectorIcons', :path => PROJECT_PATH + 'react-native-vector-icons'
+end
