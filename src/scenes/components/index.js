@@ -2,16 +2,18 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Header, Icon } from 'react-native-elements';
 
+import { colors } from '../../config';
+
 const shadow = {
 	shadowOffset: { width: 2, height: 2 },
-	shadowColor: 'black',
+	shadowColor: colors.shadow,
 	shadowOpacity: 0.5
 };
 
 const RoundButton = ({ children, onPress }) => (
 	<TouchableOpacity
 		style={{
-			backgroundColor: '#2980b9',
+			backgroundColor: colors.roundButton,
 			borderRadius: 25,
 			width: 50,
 			height: 50,
@@ -25,23 +27,23 @@ const RoundButton = ({ children, onPress }) => (
 	</TouchableOpacity>
 );
 
-const HeaderButton = ({ type, onPress, color = '#fff' }) => (
+const HeaderButton = ({ type, onPress, color = colors.headerButton }) => (
 	<TouchableOpacity onPress={onPress}>
 		<Icon name={type} color={color} />
 	</TouchableOpacity>
 );
 
-const HeaderBackButton = ({ onPress }) => <HeaderButton type="keyboard-backspace" color="#fff" onPress={onPress} />;
+const HeaderBackButton = ({ onPress }) => <HeaderButton type="keyboard-backspace" onPress={onPress} />;
 
 const AppHeader = ({ title, leftComponent, rightComponent }) => (
 	<Header
 		centerComponent={{
 			text: title,
-			style: { color: '#fff', fontSize: 16, fontWeight: 'bold' }
+			style: { color: colors.headerText, fontSize: 16, fontWeight: 'bold' }
 		}}
 		rightComponent={rightComponent}
 		leftComponent={leftComponent}
-		backgroundColor="#2980b9"
+		backgroundColor={colors.headerBg}
 		statusBarProps={{ barStyle: 'light-content' }}
 		outerContainerStyles={{ borderBottomWidth: 0 }}
 	/>

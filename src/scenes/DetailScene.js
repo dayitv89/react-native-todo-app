@@ -17,7 +17,6 @@ export default class DetailScene extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		backgroundColor: 'lightgray'
+		flex: 1
 	}
 });

@@ -8,6 +8,7 @@ export default StackNavigatorHelper.exportStackNavigator(
 		{
 			MainScene: { screen: StackNavigatorHelper.setInitParamsToProps(Scenes.MainScene) },
 			DetailScene: { screen: StackNavigatorHelper.paramsToProps(Scenes.DetailScene) },
+			SettingScene: { screen: StackNavigatorHelper.paramsToProps(Scenes.SettingScene) },
 			InfoScene: {
 				screen: StackNavigatorHelper.paramsToProps(Scenes.InfoScene),
 				navigationOptions: { gesturesEnabled: false }

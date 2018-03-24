@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default class LoginScene extends Component {
+export default class SettingScene extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Text>I'm the LoginScene component</Text>
+				<Text>I'm the SettingScene component</Text>
 			</View>
 		);
 	}
