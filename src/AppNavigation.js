@@ -7,8 +7,11 @@ export default StackNavigatorHelper.exportStackNavigator(
 	StackNavigator(
 		{
 			MainScene: { screen: StackNavigatorHelper.setInitParamsToProps(Scenes.MainScene) },
-			InfoScene: { screen: StackNavigatorHelper.paramsToProps(Scenes.InfoScene) },
-			DetailScene: { screen: StackNavigatorHelper.paramsToProps(Scenes.DetailScene) }
+			DetailScene: { screen: StackNavigatorHelper.paramsToProps(Scenes.DetailScene) },
+			InfoScene: {
+				screen: StackNavigatorHelper.paramsToProps(Scenes.InfoScene),
+				navigationOptions: { gesturesEnabled: false }
+			}
 		},
 		{
 			cardStyle: {

@@ -1,8 +1,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Icon } from 'react-native-elements';
-
-const appBg = require('../../res/app_bg.jpg');
+import { Header, Icon } from 'react-native-elements';
 
 const shadow = {
 	shadowOffset: { width: 2, height: 2 },
@@ -13,7 +11,7 @@ const shadow = {
 const RoundButton = ({ children, onPress }) => (
 	<TouchableOpacity
 		style={{
-			backgroundColor: '#496fc2',
+			backgroundColor: '#2980b9',
 			borderRadius: 25,
 			width: 50,
 			height: 50,
@@ -33,9 +31,26 @@ const HeaderButton = ({ type, onPress, color = '#fff' }) => (
 	</TouchableOpacity>
 );
 
+const HeaderBackButton = ({ onPress }) => <HeaderButton type="keyboard-backspace" color="#fff" onPress={onPress} />;
+
+const AppHeader = ({ title, leftComponent, rightComponent }) => (
+	<Header
+		centerComponent={{
+			text: title,
+			style: { color: '#fff', fontSize: 16, fontWeight: 'bold' }
+		}}
+		rightComponent={rightComponent}
+		leftComponent={leftComponent}
+		backgroundColor="#2980b9"
+		statusBarProps={{ barStyle: 'light-content' }}
+		outerContainerStyles={{ borderBottomWidth: 0 }}
+	/>
+);
+
 module.exports = {
-	appBg,
 	shadow,
 	RoundButton,
-	HeaderButton
+	HeaderButton,
+	HeaderBackButton,
+	Header: AppHeader
 };
