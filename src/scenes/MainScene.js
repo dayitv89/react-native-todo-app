@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, StyleSheet, ImageBackground } from 'react-native';
-import { Header, SearchBar } from 'react-native-elements';
+import { SearchBar } from 'react-native-elements';
 import { FloatingAction } from 'react-native-floating-action';
 
-import { HeaderButton } from './components';
+import { Header, HeaderButton } from './components';
 import Imgs from '../imgs';
 
 const actions = [
@@ -80,14 +80,8 @@ export default class MainScene extends React.Component {
 		return (
 			<ImageBackground source={Imgs.appBg} style={styles.container}>
 				<Header
-					centerComponent={{
-						text: 'TODO List',
-						style: { color: '#fff', fontSize: 16, fontWeight: 'bold' }
-					}}
+					title="TODO List"
 					rightComponent={<HeaderButton type="info" color="#fff" onPress={this.onInfoTapped} />}
-					backgroundColor="#2980b9"
-					statusBarProps={{ barStyle: 'light-content' }}
-					outerContainerStyles={{ borderBottomWidth: 0 }}
 				/>
 				<SearchBar
 					ref={o => (this.searchBar = o)}
