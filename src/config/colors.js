@@ -6,7 +6,10 @@ export default {
 	headerText: '#fff',
 	headerButton: '#fff',
 	roundButton: '#2980b9',
+	button: '#2980b9',
 	green: '#1abc9c',
 	inputText: 'black',
-	inputTextBg: '#F4F4F4'
+	inputTextBg: '#f4f4f4',
+	inputTextFloat: '#2980b9',
+	inputTextDefault: '#2980b9'
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Header, Icon } from 'react-native-elements';
+import { Header, Icon, Button } from 'react-native-elements';
+import { TextField } from 'react-native-material-textfield';
 
 import { colors } from '../../config';
 
@@ -49,10 +50,30 @@ const AppHeader = ({ title, leftComponent, rightComponent }) => (
 	/>
 );
 
+const AppTextField = props => (
+	<TextField
+		baseColor={colors.inputTextDefault}
+		textColor={colors.inputText}
+		tintColor={colors.inputTextFloat}
+		{...props}
+	/>
+);
+
+const AppButton = props => (
+	<Button
+		backgroundColor={colors.button}
+		buttonStyle={{ borderRadius: 5, margin: 0, marginTop: 20 }}
+		raised
+		{...props}
+	/>
+);
+
 module.exports = {
 	shadow,
 	RoundButton,
 	HeaderButton,
 	HeaderBackButton,
-	Header: AppHeader
+	Header: AppHeader,
+	TextField: AppTextField,
+	Button: AppButton
 };

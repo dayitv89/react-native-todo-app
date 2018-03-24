@@ -71,7 +71,7 @@ export default class MainScene extends React.Component {
 	}
 
 	onDetailTapped(data = null) {
-		this.props.navigation.navigate('DetailScene', { data });
+		this.props.navigation.navigate('DetailScene', data ? { data } : undefined);
 	}
 
 	render() {
@@ -92,7 +92,7 @@ export default class MainScene extends React.Component {
 					floatingIcon={Imgs.more}
 					actions={actions}
 					onPressItem={this.onFloatMenu}
-					buttonColor="#2980b9"
+					buttonColor={colors.roundButton}
 				/>
 			</ImageBackground>
 		);
