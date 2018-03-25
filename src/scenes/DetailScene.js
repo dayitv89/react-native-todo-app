@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
-import { View, ImageBackground, Text, StyleSheet, Alert } from 'react-native';
-
+import DatePicker from 'react-native-datepicker';
+import { View, ImageBackground, Text, Alert } from 'react-native';
+import { connect } from 'react-redux';
+import actions from '../redux/actions';
 import Imgs from '../imgs';
 import { HeaderBackButton, Header, TextField, Button } from './components';
 import { colors } from '../config';
-
-import { TodoModel, TodoManager } from '../model';
+import { TodoModel } from '../model';
 
 const dateFormat = 'MMM DD, YYYY hh:mm A';
-export default class DetailScene extends Component {
+
+class DetailScene extends Component {
 	constructor(props) {
 		super(props);
 		const { name, desc, date } = props.data;
 		this.state = { name, desc, date: date || moment(new Date()).format(dateFormat) };
-	}
-
-	onDateSelected(date) {
-		this.setState({ date });
 	}
 
 	renderDatePicker() {
@@ -36,15 +33,8 @@ export default class DetailScene extends Component {
 				confirmBtnText="Confirm"
 				cancelBtnText="Cancel"
 				showIcon={false}
-				onDateChange={this.onDateSelected.bind(this)}
-				customStyles={{
-					btnTextConfirm: {
-						height: 20
-					},
-					btnTextCancel: {
-						height: 20
-					}
-				}}
+				onDateChange={date => this.setState({ date })}
+				customStyles={styles.datePickerCustomStyles}
 			/>
 		);
 	}
@@ -73,7 +63,8 @@ export default class DetailScene extends Component {
 							} else {
 								const id = this.props.data.id ? { id: this.props.data.id } : {};
 								const aTodo = new TodoModel({ ...id, name, desc, date });
-								TodoManager.save(aTodo).then(() => this.props.navigation.goBack());
+								this.props.saveTodo(aTodo);
+								this.props.navigation.goBack();
 							}
 						}}
 					/>
@@ -92,7 +83,9 @@ DetailScene.defaultProps = {
 	data: { id: null, name: '', desc: '', date: '' }
 };
 
-const styles = StyleSheet.create({
+export default connect(null, { saveTodo: actions.saveTodo })(DetailScene);
+
+const styles = {
 	container: {
 		flex: 1,
 		backgroundColor: colors.bg
@@ -103,5 +96,13 @@ const styles = StyleSheet.create({
 		marginVertical: 5,
 		padding: 5,
 		backgroundColor: colors.inputTextBg
+	},
+	datePickerCustomStyles: {
+		btnTextConfirm: {
+			height: 20
+		},
+		btnTextCancel: {
+			height: 20
+		}
 	}
-});
+};

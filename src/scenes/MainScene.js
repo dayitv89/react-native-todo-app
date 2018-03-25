@@ -1,15 +1,15 @@
 import React from 'react';
-import { Text, ImageBackground, View, Alert } from 'react-native';
+import PropTypes from 'prop-types';
+import { Text, ImageBackground, Alert } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { FloatingAction } from 'react-native-floating-action';
-
-import TodoList from './TodoList';
+import { connect } from 'react-redux';
+import actions from '../redux/actions';
 import Imgs from '../imgs';
-import { TodoManager } from '../model';
-import { Header, HeaderButton } from './components';
+import { Header, HeaderButton, TodoList } from './components';
 import { colors } from '../config';
 
-const actions = [
+const actionsFab = [
 	{
 		text: 'About app',
 		icon: Imgs.about,
@@ -47,23 +47,14 @@ const actions = [
 	}
 ];
 
-export default class MainScene extends React.Component {
+class MainScene extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { data: [] };
-		setTimeout(() => this.setState({ data: TodoManager.getAll() }), 200);
-		this.onInfoTapped = this.onInfoTapped.bind(this);
-		this.onDetailTapped = this.onDetailTapped.bind(this);
-		this.onFilterTapped = this.onFilterTapped.bind(this);
-		this.onSearch = this.onSearch.bind(this);
-		this.onFloatMenu = this.onFloatMenu.bind(this);
+		this.filter = 'all';
+		this.props.allTodoData();
 	}
 
-	onSearch(text) {
-		this.setState({ data: TodoManager.find(text) });
-	}
-
-	onFloatMenu(btnName) {
+	onFloatMenu = btnName => {
 		switch (btnName) {
 			case 'bt_about':
 				this.onInfoTapped();
@@ -81,34 +72,61 @@ export default class MainScene extends React.Component {
 				this.onDetailTapped();
 				break;
 		}
-	}
+	};
 
-	onInfoTapped() {
-		this.props.navigation.navigate('InfoScene');
-	}
-
-	onDetailTapped(data = null) {
-		this.props.navigation.navigate('DetailScene', data ? { data } : undefined);
-	}
-
-	onFilterTapped() {
+	onFilterTapped = () => {
 		Alert.alert(
 			'Filter Tasks',
 			'Choose type of tasks',
 			[
 				{
 					text: 'Show all',
-					onPress: () => this.setState({ data: TodoManager.getAll() }),
+					onPress: () => {
+						this.filter = 'all';
+						this.props.allTodoData();
+					},
 					style: 'cancel'
 				},
-				{ text: 'Completed tasks', onPress: () => this.setState({ data: TodoManager.getAllCompleted() }) },
-				{ text: 'Incompleted tasks', onPress: () => this.setState({ data: TodoManager.getAllIncompleted() }) },
-				{ text: 'Expired tasks', onPress: () => this.setState({ data: TodoManager.getAllExpired() }) },
-				{ text: 'Upcoming tasks', onPress: () => this.setState({ data: TodoManager.getAllUpcoming() }) }
+				{
+					text: 'Completed tasks',
+					onPress: () => {
+						this.filter = 'completed';
+						this.props.completedTodoData();
+					}
+				},
+				{
+					text: 'Incompleted tasks',
+					onPress: () => {
+						this.filter = 'incompleted';
+						this.props.incompletedTodoData();
+					}
+				},
+				{
+					text: 'Expired tasks',
+					onPress: () => {
+						this.filter = 'expired';
+						this.props.expiredTodoData();
+					}
+				},
+				{
+					text: 'Upcoming tasks',
+					onPress: () => {
+						this.filter = 'upcoming';
+						this.props.upcomingTodoData();
+					}
+				}
 			],
 			{ cancelable: false }
 		);
-	}
+	};
+
+	onInfoTapped = () => {
+		this.props.navigation.navigate('InfoScene');
+	};
+
+	onDetailTapped = (data = null) => {
+		this.props.navigation.navigate('DetailScene', data ? { data } : undefined);
+	};
 
 	render() {
 		return (
@@ -121,16 +139,19 @@ export default class MainScene extends React.Component {
 				<SearchBar
 					ref={o => (this.searchBar = o)}
 					placeholder="Search task by name or description ..."
-					onChangeText={this.onSearch}
+					onChangeText={t => this.props.searchTodoData(t)}
 					lightTheme
 					containerStyle={{ backgroundColor: colors.primary, borderTopWidth: 0, borderBottomWidth: 0 }}
 					inputStyle={{ backgroundColor: colors.inputTextBg, color: colors.inputText }}
 					returnKeyType="search"
 				/>
-				<TodoList data={this.state.data} onCellTapped={this.onDetailTapped} />
+				<TodoList
+					onCellTapped={this.onDetailTapped}
+					toogleCompletion={i => this.props.toogleCompletionTodo(i, this.filter)}
+				/>
 				<FloatingAction
 					floatingIcon={Imgs.more}
-					actions={actions}
+					actions={actionsFab}
 					onPressItem={this.onFloatMenu}
 					buttonColor={colors.roundButton}
 				/>
@@ -138,3 +159,15 @@ export default class MainScene extends React.Component {
 		);
 	}
 }
+
+MainScene.propTypes = {
+	allTodoData: PropTypes.func.isRequired,
+	completedTodoData: PropTypes.func.isRequired,
+	incompletedTodoData: PropTypes.func.isRequired,
+	expiredTodoData: PropTypes.func.isRequired,
+	upcomingTodoData: PropTypes.func.isRequired,
+	searchTodoData: PropTypes.func.isRequired,
+	toogleCompletionTodo: PropTypes.func.isRequired
+};
+
+export default connect(null, { ...actions })(MainScene);

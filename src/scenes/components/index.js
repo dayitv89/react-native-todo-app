@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Header, Icon, Button } from 'react-native-elements';
 import { TextField } from 'react-native-material-textfield';
+import TodoList from './TodoList';
 
 import { colors } from '../../config';
 
@@ -75,5 +76,6 @@ module.exports = {
 	HeaderBackButton,
 	Header: AppHeader,
 	TextField: AppTextField,
-	Button: AppButton
+	Button: AppButton,
+	TodoList
 };

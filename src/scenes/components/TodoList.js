@@ -1,11 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Card, Button } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { colors } from '../../config';
 
-import { colors } from '../config';
-import { TodoManager } from '../model';
-
-export default class TodoList extends React.Component {
+class TodoList extends React.Component {
 	renderCell = ({ item, index }) => {
 		return (
 			<TouchableOpacity onPress={() => this.props.onCellTapped(item)}>
@@ -30,7 +30,7 @@ export default class TodoList extends React.Component {
 							icon={{ name: item.completed ? 'close' : 'done' }}
 							backgroundColor={item.completed ? colors.incompleted : colors.completed}
 							title={`Mark as ${item.completed ? 'incompleted' : 'completed'}`}
-							onPress={() => TodoManager.toogleCompletion(item)}
+							onPress={() => this.props.toogleCompletion(item)}
 						/>
 					)}
 				</Card>
@@ -51,3 +51,9 @@ export default class TodoList extends React.Component {
 		);
 	}
 }
+
+TodoList.propTypes = {
+	data: PropTypes.array
+};
+
+export default connect(s => ({ data: s.todo_data }))(TodoList);
