@@ -25,9 +25,9 @@ const actionsFab = [
 		position: 2
 	},
 	{
-		text: 'Settings',
+		text: 'Profile',
 		icon: Imgs.settings,
-		name: 'bt_settings',
+		name: 'bt_profile',
 		color: colors.primary,
 		position: 3
 	},
@@ -62,8 +62,8 @@ class MainScene extends React.Component {
 			case 'bt_filter':
 				this.onFilterTapped();
 				break;
-			case 'bt_settings':
-				this.props.navigation.navigate('SettingScene');
+			case 'bt_profile':
+				this.props.navigation.navigate('ProfileScene');
 				break;
 			case 'bt_search':
 				this.searchBar.focus();
