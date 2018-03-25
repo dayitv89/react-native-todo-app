@@ -28,8 +28,18 @@ export default class TodoModel extends JSModel {
 
 	humanize() {
 		if (this.isExpired()) {
-			return 'Task expired';
+			return `${this.completed ? '👍' : '👎'} Task expired`;
 		}
 		return moment.duration(this.diff()).humanize() + ' remaining';
+	}
+
+	toogleCompletion() {
+		this.completed = !this.completed;
+	}
+
+	updateInfo({ name, desc, date }) {
+		this.name = name || this.name;
+		this.desc = desc || this.desc;
+		this.date = date || this.date;
 	}
 }

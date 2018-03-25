@@ -71,7 +71,8 @@ export default class DetailScene extends Component {
 							if (!name || !date) {
 								Alert.alert('Oops!', 'Please fill the mandatory fields');
 							} else {
-								const aTodo = new TodoModel({ name, desc, date });
+								const id = this.props.data.id ? { id: this.props.data.id } : {};
+								const aTodo = new TodoModel({ ...id, name, desc, date });
 								TodoManager.save(aTodo).then(() => this.props.navigation.goBack());
 							}
 						}}

@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, ImageBackground, FlatList, View, Alert } from 'react-native';
-import { SearchBar, Card, Button } from 'react-native-elements';
+import { Text, ImageBackground, View, Alert } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 import { FloatingAction } from 'react-native-floating-action';
 
+import TodoList from './TodoList';
 import Imgs from '../imgs';
-import { TodoModel, TodoManager } from '../model';
+import { TodoManager } from '../model';
 import { Header, HeaderButton } from './components';
 import { colors } from '../config';
 
@@ -17,25 +18,32 @@ const actions = [
 		position: 1
 	},
 	{
+		text: 'Filter list',
+		icon: Imgs.filter,
+		name: 'bt_filter',
+		color: colors.primary,
+		position: 2
+	},
+	{
 		text: 'Settings',
 		icon: Imgs.settings,
 		name: 'bt_settings',
 		color: colors.primary,
-		position: 2
+		position: 3
 	},
 	{
 		text: 'Search',
 		icon: Imgs.search,
 		name: 'bt_search',
 		color: colors.primary,
-		position: 3
+		position: 4
 	},
 	{
 		text: 'Add new task',
 		icon: Imgs.add,
 		name: 'bt_add_new',
 		color: colors.green,
-		position: 4
+		position: 5
 	}
 ];
 
@@ -49,7 +57,6 @@ export default class MainScene extends React.Component {
 		this.onFilterTapped = this.onFilterTapped.bind(this);
 		this.onSearch = this.onSearch.bind(this);
 		this.onFloatMenu = this.onFloatMenu.bind(this);
-		this.renderCell = this.renderCell.bind(this);
 	}
 
 	onSearch(text) {
@@ -60,6 +67,9 @@ export default class MainScene extends React.Component {
 		switch (btnName) {
 			case 'bt_about':
 				this.onInfoTapped();
+				break;
+			case 'bt_filter':
+				this.onFilterTapped();
 				break;
 			case 'bt_settings':
 				this.props.navigation.navigate('SettingScene');
@@ -100,53 +110,9 @@ export default class MainScene extends React.Component {
 		);
 	}
 
-	renderCell({ item, index }) {
-		return (
-			<Card
-				title={item.name}
-				containerStyle={{
-					borderRadius: 5,
-					overflow: 'hidden',
-					marginBottom: index + 1 === this.state.data.length ? 15 : 0
-				}}
-			>
-				{item.desc && <Text style={{ marginBottom: 10 }}>{item.desc}</Text>}
-				<View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-					<Text style={{ marginBottom: 10 }}>⏰{item.date}</Text>
-					<Text style={{ marginBottom: 10 }}>{item.humanize()}</Text>
-				</View>
-				<Button
-					buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
-					icon={{ name: item.completed ? 'close' : 'done' }}
-					backgroundColor={item.completed ? colors.incompleted : colors.completed}
-					title={`Mark as ${item.completed ? 'incompleted' : 'completed'}`}
-				/>
-			</Card>
-		);
-	}
-
-	renderList() {
-		if (this.state.data && this.state.data.length > 0) {
-			return <FlatList data={this.state.data} renderItem={this.renderCell} keyExtractor={i => i.id} />;
-		}
-		return (
-			<View style={{ flex: 1, alignItems: 'center', padding: 30 }}>
-				<Text style={{ fontSize: 15 }}>
-					There is no todo available, you can add item by pressing the menu button at right bottom side.
-				</Text>
-			</View>
-		);
-	}
-
 	render() {
 		return (
-			<ImageBackground
-				source={Imgs.appBg}
-				style={{
-					flex: 1,
-					backgroundColor: 'white'
-				}}
-			>
+			<ImageBackground source={Imgs.appBg} style={{ flex: 1, backgroundColor: 'white' }}>
 				<Header
 					title="Todo List"
 					leftComponent={<HeaderButton type="info" onPress={this.onInfoTapped} />}
@@ -161,7 +127,7 @@ export default class MainScene extends React.Component {
 					inputStyle={{ backgroundColor: colors.inputTextBg, color: colors.inputText }}
 					returnKeyType="search"
 				/>
-				{this.renderList()}
+				<TodoList data={this.state.data} onCellTapped={this.onDetailTapped} />
 				<FloatingAction
 					floatingIcon={Imgs.more}
 					actions={actions}

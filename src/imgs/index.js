@@ -6,5 +6,6 @@ export default {
 	about: require('./float_menu/about.png'),
 	search: require('./float_menu/search.png'),
 	more: require('./float_menu/more.png'),
-	back: require('./float_menu/back.png')
+	back: require('./float_menu/back.png'),
+	filter: require('./float_menu/filter.png')
 };

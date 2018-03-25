@@ -13,5 +13,7 @@ export default {
 	inputTextFloat: '#2980b9',
 	inputTextDefault: '#2980b9',
 	completed: '#1abc9c',
-	incompleted: '#c0392b'
+	incompleted: '#c0392b',
+	expired: '#c0392b',
+	nonexpired: '#000'
 };

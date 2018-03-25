@@ -9,7 +9,20 @@ class AllTodos {
 	}
 
 	getSorted() {
-		return this.allTodo.sort((t1, t2) => t1.diff() - t2.diff());
+		const allSorted = this.allTodo.sort((t1, t2) => t1.diff() - t2.diff());
+		const completed = [];
+		const expired = [];
+		const incompleted = [];
+		allSorted.forEach(i => {
+			if (i.isExpired()) {
+				expired.push(i);
+			} else if (i.completed) {
+				completed.push(i);
+			} else {
+				incompleted.push(i);
+			}
+		});
+		return [...incompleted, ...completed, ...expired];
 	}
 
 	find(text = '') {
@@ -50,7 +63,7 @@ class AllTodos {
 			this.allTodo.forEach(i => {
 				if (i.id === todo.id) {
 					alreadyHas = true;
-					i = todo;
+					i.updateInfo(todo);
 				}
 			});
 			if (!alreadyHas) {
@@ -104,13 +117,15 @@ class TodoManager {
 		return this.allTodos.find(text);
 	}
 
-	save(todo) {
-		if (typeof todo !== 'TodoModel') {
-			todo = new TodoModel(todo);
-		}
+	save(todo: TodoModel) {
 		if (this.allTodos.updateOrInsert(todo)) {
 			return AsyncStorage.setItem(kTodoStore, this.allTodos.toJSON());
 		}
+	}
+
+	toogleCompletion(todo: TodoModel) {
+		todo.toogleCompletion();
+		this.save(todo);
 	}
 }
 
