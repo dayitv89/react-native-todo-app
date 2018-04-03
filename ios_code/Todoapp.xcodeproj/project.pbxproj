@@ -100,6 +100,7 @@
 				A49709B12066B13700450C94 /* Resources */,
 				7B701C46FE42EA69B0C053B1 /* [CP] Embed Pods Frameworks */,
 				5C38A47EB4685D76747D1E01 /* [CP] Copy Pods Resources */,
+				A40DC4462073BA9B0049BB16 /* react-native */,
 			);
 			buildRules = (
 			);
@@ -208,6 +209,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Todoapp/Pods-Todoapp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		A40DC4462073BA9B0049BB16 /* react-native */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "react-native";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 		DBA0A22F98F5A7786D358E4A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
