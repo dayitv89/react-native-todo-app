@@ -153,7 +153,7 @@ class MainScene extends React.Component {
 					floatingIcon={Imgs.more}
 					actions={actionsFab}
 					onPressItem={this.onFloatMenu}
-					buttonColor={colors.roundButton}
+					color={colors.roundButton}
 				/>
 			</ImageBackground>
 		);
@@ -168,6 +168,16 @@ MainScene.propTypes = {
 	upcomingTodoData: PropTypes.func.isRequired,
 	searchTodoData: PropTypes.func.isRequired,
 	toogleCompletionTodo: PropTypes.func.isRequired
+};
+
+MainScene.defaultProps = {
+	allTodoData: () => null,
+	completedTodoData: () => null,
+	incompletedTodoData: () => null,
+	expiredTodoData: () => null,
+	upcomingTodoData: () => null,
+	searchTodoData: () => null,
+	toogleCompletionTodo: () => null
 };
 
 export default connect(null, { ...actions })(MainScene);
