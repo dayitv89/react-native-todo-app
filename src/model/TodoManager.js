@@ -130,4 +130,8 @@ class TodoManager {
 }
 
 const sharedTodoManager = new TodoManager();
-export default sharedTodoManager;
+
+module.exports = {
+	TodoManager: sharedTodoManager,
+	AllTodos
+};

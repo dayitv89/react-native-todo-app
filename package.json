@@ -7,9 +7,9 @@
 		"test": "jest"
 	},
 	"jest": {
-		"notify": true,
 		"preset": "react-native",
-		"transformIgnorePatterns": ["node_modules/(?!(jest-)?react-native|react-navigation)"]
+		"transformIgnorePatterns": ["node_modules/(?!(jest-)?react-native|react-navigation|react-navigation-helper)"],
+		"setupFiles": ["<rootDir>/__mock__/JestSetup.js"]
 	},
 	"dependencies": {
 		"moment": "^2.21.0",
